@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ระบบครุภัณฑ์</title>
+  <style>
+    body { font-family: sans-serif; margin: 30px; }
+    input, select { margin: 5px; padding: 5px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f0f0f0; }
+    .btn { cursor: pointer; padding: 5px 10px; }
+  </style>
+</head>
+<body>
+
+<h2>เพิ่มครุภัณฑ์</h2>
+<form id="assetForm">
+  <input type="text" id="code" placeholder="รหัสครุภัณฑ์" required>
+  <input type="text" id="name" placeholder="ชื่อครุภัณฑ์" required>
+  <input type="text" id="type" placeholder="ประเภท" required>
+  <input type="date" id="purchaseDate" required>
+  <input type="number" id="value" placeholder="มูลค่า (บาท)" required>
+  <select id="status">
+    <option value="พร้อมใช้">พร้อมใช้</option>
+    <option value="ชำรุด">ชำรุด</option>
+    <option value="ยืมอยู่">ยืมอยู่</option>
+  </select>
+  <button type="submit" class="btn">เพิ่ม</button>
+</form>
+
+<h2>รายการครุภัณฑ์</h2>
+<table id="assetTable">
+  <thead>
+    <tr>
+      <th>รหัส</th>
+      <th>ชื่อ</th>
+      <th>ประเภท</th>
+      <th>วันที่ซื้อ</th>
+      <th>มูลค่า</th>
+      <th>สถานะ</th>
+      <th>ลบ</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+  const form = document.getElementById('assetForm');
+  const tableBody = document.querySelector('#assetTable tbody');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const code = document.getElementById('code').value;
+    const name = document.getElementById('name').value;
+    const type = document.getElementById('type').value;
+    const date = document.getElementById('purchaseDate').value;
+    const value = document.getElementById('value').value;
+    const status = document.getElementById('status').value;
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${code}</td>
+      <td>${name}</td>
+    <td>${type}</td>
+      <td>${date}</td>
+      <td>${parseFloat(value).toLocaleString()} บาท</td>
+      <td>${status}</td>
+      <td><button class="btn" onclick="this.closest('tr').remove()">ลบ</button></td>
+    `;
+
+    tableBody.appendChild(row);
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
